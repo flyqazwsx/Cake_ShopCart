@@ -1,0 +1,170 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 如月點心</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="keywords" content="如月點心,蛋糕,派,塔,千層,客製化,預購,送貨到府">
+    <meta name="description"
+          content="歡迎來到我們的如月點心店！我們提供各種口味豐富的蛋糕、派和塔，包括令人垂涎的千層蛋糕。我們以客製化的方式滿足您的糕點需求，讓您品嚐到獨一無二的甜點體驗。無論是慶祝生日、結婚或其他特殊場合，我們的預購服務可確保您獲得完美的糕點驚喜。確保蛋糕的安全送達，我們會選擇合適的包裝材料，將蛋糕固定好，避免在運送過程中損壞。我們的配送團隊將小心翼翼地將蛋糕送到您指定的地址，確保它完好無損地抵達。盡情享受我們獨特的糕點創意和優質的客戶服務，為您帶來甜蜜的滿足">
+    <meta name="author" content="如月點心">
+    <link href="~/img/icon1.png" rel="icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    
+</head>
+<body>
+    <header>
+        <div id="spinner"
+             class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+
+
+
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a asp-area="Customer" asp-controller="Home" asp-action="index" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                <h2 class="m-0 text-primary">
+                    <img width="50px" src="~/img/icon1.png" alt="如月點心icon" title="如月點心">  如月點心
+
+                </h2>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a asp-area="Customer" asp-action="index" asp-controller="Home" class="nav-item nav-link ">如月</a>
+                    <a asp-area="Customer" asp-action="about" asp-controller="Home" class="nav-item nav-link">關於如月</a>
+                    <a asp-area="Customer" asp-action="serve" asp-controller="Home" class="nav-item nav-link">我們的服務</a>
+                    <a asp-area="Customer" asp-action="commodity" asp-controller="Home" class="nav-item nav-link">商品介紹</a>
+                    <a asp-area="Customer" asp-action="Product" asp-controller="Home" class="nav-item nav-link">訂購商品</a>
+                                                              
+
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Manager))
+                        {
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-item" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">內容管理</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item " asp-area="Admin" asp-controller="Category" asp-action="Index">類別</a>
+                                    <a class="dropdown-item " asp-area="Admin" asp-controller="Product" asp-action="Index">商品</a>
+                                    <a class="dropdown-item " asp-area="Admin" asp-controller="Store" asp-action="Index">分店</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">建立使用者</a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                        <a class="nav-item nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">訂單管理</a>
+
+
+                        <a class="nav-item nav-link" asp-area="Customer" asp-controller="cart" asp-action="Index">
+                                <i class="bi bi-cart"></i> &nbsp;
+                        </a>
+                        
+                        
+                        <partial name="_LoginPartial" />
+                    
+
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">連結</h4>
+                    <a class="btn btn-link" asp-action="about" asp-controller="Home">關於如月</a>
+                    <a class="btn btn-link" asp-action="serve" asp-controller="Home">我們的服務</a>
+                    <a class="btn btn-link" asp-action="commodity" asp-controller="Home">商品介紹</a>
+                    <a class="btn btn-link" asp-action="Product" asp-controller="Home">訂購商品</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">聯絡我們</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street,Taiwan</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@gmail.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href="https://twitter.com/home">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="btn btn-outline-light btn-social" href="https://zh-tw.facebook.com/">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">營業時間</h4>
+                    <p class="mb-2">周一 ~ 週五</p>
+                    <p class="mb-2">09:00 ~ 22:00</p>
+                    <p class="mb-2">周六 ~ 週日</p>
+                    <p class="mb-2">08:00 ~ 23:00</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">本網站引用資源連結</h4>
+                    <p>本網站為學術用途，非營利用途</p>
+                    <a class="btn btn-link" target="_blank" href="https://www.tientien.com.tw/">甜點控</a>
+                    <a class="btn btn-link" target="_blank" href="https://ponpie.tw/">PONPIE</a>
+                    <a class="btn btn-link" target="_blank"
+                       href="https://www.mumujbaker.com/products/cake14">MUMUJBAKER</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/wow/wow.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://kit.fontawesome.com/fc40700719.js" crossorigin="anonymous"></script>
+    <script src="~/js/main.js"></script>
+     
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @await Html.PartialAsync("_ToastPartial")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
